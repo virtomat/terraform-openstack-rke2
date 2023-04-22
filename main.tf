@@ -7,7 +7,7 @@ locals {
   } : var.s3_backup
 
   external_ip      = openstack_networking_floatingip_v2.external.address
-  internal_ip      = cidrhost(var.subnet_lb_cidr, 3)
+  internal_ip      = cidrhost(var.subnet_lb_cidr, 20)
   operator_replica = min(2, length(var.servers))
 }
 
@@ -82,6 +82,7 @@ module "servers" {
         subnet_id           = openstack_networking_subnet_v2.lb.id
         floating_network_id = data.openstack_networking_network_v2.floating_net.id
         cluster_name        = var.name
+        lb_provider  = var.lb_provider
       }),
       "cilium.yml" : templatefile("${path.module}/manifests/cilium.yml.tpl", {
         operator_replica = local.operator_replica

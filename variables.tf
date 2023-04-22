@@ -195,3 +195,8 @@ variable "ff_native_backup" {
   type    = bool
   default = true
 }
+
+variable "lb_provider" {
+   type = string
+   default = "octavia"
+}

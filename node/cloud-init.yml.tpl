@@ -25,6 +25,7 @@ packages:
   - curl
   - jq
   - nfs-client
+  - rsync
 
 users:
   - default
