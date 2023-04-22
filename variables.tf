@@ -8,6 +8,11 @@ variable "ssh_public_key_file" {
   default = "~/.ssh/id_rsa.pub"
 }
 
+variable "ssh_private_key_file" {
+  type    = string
+  default = "~/.ssh/id_rsa"
+}
+
 variable "floating_pool" {
   type = string
 }
