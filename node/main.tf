@@ -38,7 +38,7 @@ resource "openstack_compute_instance_v2" "instance" {
   count                   = var.nodes_count
   name                    = "${var.name}-${count.index + 1}"
   availability_zone_hints = length(var.availability_zones) > 0 ? var.availability_zones[count.index % length(var.availability_zones)] : null
-
+  image_id     = var.image_uuid != null ? var.image_uuid : data.openstack_images_image_v2.image.id
   flavor_name  = var.flavor_name
   key_pair     = var.keypair_name
   config_drive = true
@@ -56,14 +56,14 @@ resource "openstack_compute_instance_v2" "instance" {
     rke2_role    = var.is_server ? "server" : "agent"
   }
 
-  block_device {
+  /*block_device {
     uuid                  = var.image_uuid != null ? var.image_uuid : data.openstack_images_image_v2.image.id
     source_type           = "image"
     volume_size           = var.boot_volume_size
     boot_index            = 0
     destination_type      = "volume"
     delete_on_termination = true
-  }
+  }*/
 
   # yamlencode(yamldecode to debug yaml
   user_data = base64encode(templatefile("${path.module}/cloud-init.yml.tpl", {

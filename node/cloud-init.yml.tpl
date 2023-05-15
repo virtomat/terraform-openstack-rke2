@@ -51,6 +51,7 @@ write_files:
       RKE2_ROLE=$(curl -s http://169.254.169.254/openstack/2012-08-10/meta_data.json | jq -r '.meta.rke2_role')
       RKE2_SERVICE="rke2-$RKE2_ROLE.service"
       echo "Installing RKE2 $INSTALL_RKE2_VERSION with $RKE2_ROLE role"
+      echo "Q" | openssl s_client -connect github.com:443 -servername github.com
       curl -sfL https://get.rke2.io | sh -
     fi
 %{ if is_server ~}
